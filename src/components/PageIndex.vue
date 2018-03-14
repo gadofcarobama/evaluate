@@ -13,17 +13,34 @@
       </div>
 
       <el-card class="box-card1">
-        <div class="text item">
-        </div>
+        <!--<div class="text item">-->
+        <!--</div>-->
         <div class="button1">
           <div v-for="i in starting">
-            <el-card>
-              开始时间：{{i.startingExam}}<br/>
-              结束时间：{{i.startingExam1}}
-              <router-link :to="{path:'pageOne',query:{classId:i.classId,pageId:i.pageId}}">
-                <el-button type="primary" round>开始考试</el-button>
-              </router-link>
-            </el-card>
+            <div class="leftC">
+              <el-card>
+                <div>试卷编号：15141</div>
+                <b>开始时间：</b>{{i.startingExam}}<br/>
+                <b>结束时间：</b>{{i.startingExam1}}
+                <router-link :to="{path:'pageOne',query:{classId:i.classId,pageId:i.pageId}}">
+                  <div class="startT">
+                    <el-button type="primary" round>开始考试</el-button>
+                  </div>
+                </router-link>
+              </el-card>
+            </div>
+            <div class="rightC">
+              <el-card>
+                <div>试卷编号：15141</div>
+                <b>开始时间：</b>{{i.startingExam}}<br/>
+                <b>结束时间：</b>{{i.startingExam1}}
+                <router-link :to="{path:'pageOne',query:{classId:i.classId,pageId:i.pageId}}">
+                  <div class="startT">
+                    <el-button type="primary" round>开始考试</el-button>
+                  </div>
+                </router-link>
+              </el-card>
+            </div>
           </div>
         </div>
       </el-card>
@@ -267,7 +284,7 @@
 
   .box-card1 {
     margin-top: 60px;
-    width: 400px;
+    width: 100%;
     background-color: #f1f1f1;
   }
 
@@ -280,8 +297,27 @@
   }
 
   .button1 {
-    float: right;
+    /*float: right;*/
     padding-bottom: 10px;
+  }
+  .startT{
+    float:right;
+    margin-top: 10px;
+    margin-bottom: 10px;
+  }
+  .leftC{
+    float: left;
+    margin-left: 1%;
+    width: 48%;
+    margin-top: 6px;
+    margin-bottom: 6px;
+  }
+  .rightC{
+    width: 48%;
+    float: right;
+    margin-right: 1%;
+    margin-top: 6px;
+    margin-bottom: 6px;
   }
 </style>
 
