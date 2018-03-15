@@ -5,8 +5,6 @@
   </div>
 </template>
 <script>
-  // import Menu from './components/Menu'
-  // import Login from './components/Login'
   export default {
     name: 'app',
     data (){

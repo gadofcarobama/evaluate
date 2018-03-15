@@ -8,12 +8,12 @@
       <el-col :span="8">
         <div>
           <el-card class="box-card" id="login">
-            <div v-show="msg">您输入的用户名或密码错误</div>
-            <el-input placeholder="请输入用户名：" v-model="username" class="username" v-on:focus="errmiss">
-              <template slot="prepend">用户名：</template>
+            <div v-show="msg">您输入的学号或密码错误</div>
+            <el-input placeholder="请输入用户名" v-model="username" class="username" v-on:focus="errmiss">
+              <template slot="prepend">学&nbsp;&nbsp;&nbsp;号</template>
             </el-input>
-            <el-input placeholder="请输入密码：" class="password" v-model="password" v-on:focus="errmiss" type="password">
-              <template slot="prepend">密码：&nbsp&nbsp&nbsp</template>
+            <el-input placeholder="请输入密码" class="password" v-model="password" v-on:focus="errmiss" type="password">
+              <template slot="prepend">密&nbsp;&nbsp;&nbsp;码</template>
             </el-input>
             <div v-show="notnull">用户名或密码不能为空</div>
             <el-button class="el-button--primary" v-on:click="console">登录</el-button>
@@ -23,10 +23,11 @@
     </el-row>
   </div>
 </template>
- <script>
+<script>
   import ElCard from "element-ui/packages/card/src/main";
   import store from '../vuex/store.js'
   import Menu from './Menu'
+
   export default {
     mounted() {
       //window.addEventListener()
@@ -36,13 +37,9 @@
       Menu
     },
     created() {
-      console.log(this.user.id)
       if (this.user.id) {
         this.$router.push({path: '/pageIndex', query: {idclass: this.user.classId, studentId: this.user.id}})
-        console.log("a")
       }
-      console.log("ab")
-
     },
     name: "login",
     data() {
@@ -58,7 +55,7 @@
     ,
     methods: {
       errmiss: function () {
-        if (this.msg == true || this.notnull == true) {
+        if (this.msg === true || this.notnull === true) {
           this.msg = false
           this.notnull = false
         }
@@ -67,7 +64,7 @@
       console: function () {
         // console.log(this.username)
         // alert(this.username)
-        if (this.username == '' || this.password == '') {
+        if (this.username === '' || this.password === '') {
           this.notnull = true;
         } else {
           this.axios.post('/user/login', {
@@ -75,26 +72,29 @@
               "password": this.password
             }, {emulateJSON: true}
           ).then(res => {
-            console.log(res);
-            console.log(res.data.code);
-            if (res.data.code == 200) {
+            if (res.data.code === 200) {
               let classId = res.data.data.classId
               let studentId = res.data.data.id
               let studentName = res.data.data.name
-              console.log('studentName::' + studentName)
-              // console.log('classId::'+classId)
-              // console.log('studentId::'+studentId)
-              // console.log('thisclassId::'+this.classId)可以使用了
               window.localStorage.setItem('user', JSON.stringify(res.data.data))
               //分发登录的action
               store.dispatch("login")
               //this.$router.replace('/eventHub')
-
+              this.$notify({
+                title: '登录成功',
+                message: '欢迎' + res.data.data.name + "登录",
+                type: "success"
+              })
               this.$router.push({path: '/pageIndex', query: {idclass: classId, studentId: studentId}})
             } else {
               this.msg = true;
             }
           }).catch(err => {
+            this.$notify({
+              title: '登录失败',
+              message: '服务器请求失败，请检查网络或联系管理员',
+              type: "error"
+            });
             console.log(err)
           })
         }
@@ -139,6 +139,5 @@
     margin-top: 50px;
     position: fixed;
     background-image: url("http://img.zcool.cn/community/0142135541fe180000019ae9b8cf86.jpg@1280w_1l_2o_100sh.png");
-    background-color: red;
   }
 </style>

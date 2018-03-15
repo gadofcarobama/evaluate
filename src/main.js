@@ -7,13 +7,14 @@ import axios from 'axios'
 import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
 import VCharts from 'v-charts'
+
 Vue.config.productionTip = false
 Vue.prototype.axios = axios
 Vue.use(ElementUI)
 Vue.prototype.$axios = axios.create({
   baseURL: 'http://193.112.6.35:8080/'
 })
-axios.defaults.baseURL='http://193.112.6.35:8080/'
+axios.defaults.baseURL = 'http://193.112.6.35:8080/'
 Vue.use(VCharts)
 Vue.use(axios)
 // router.beforeEach((to,next)=>{
