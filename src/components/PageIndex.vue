@@ -1,113 +1,140 @@
 <template>
-  <div class="box" v-show="classId">
+  <div v-show="classId">
     <Menu></Menu>
     <div v-show="msg">
       <el-card class="login">请先登录</el-card>
     </div>
-    <div class="box1">
-      <div class="box1-word">
-        正在进行的考试
-      </div>
-      <div class="box1-line">
-        <hr>
-      </div>
-
-      <el-card class="box-card1">
-        <!--<div class="text item">-->
-        <!--</div>-->
-        <div class="button1">
-          <div v-for="i in starting">
+    <div class="MClass">
+      <el-collapse v-model="activeNames" @change="handleChange">
+        <el-collapse-item title="正在进行的考试" name="1">
+          <div v-for="(item,index) in starting" :key="index" class="box-card1" v-if="index%2==0">
             <div class="leftC">
-              <el-card>
-                <div>试卷编号：15141</div>
-                <b>开始时间：</b>{{i.startingExam}}<br/>
-                <b>结束时间：</b>{{i.startingExam1}}
-                <router-link :to="{path:'pageOne',query:{classId:i.classId,pageId:i.pageId}}">
-                  <div class="startT">
-                    <el-button type="primary" round>开始考试</el-button>
-                  </div>
-                </router-link>
+              <el-card class="box-card">
+                <div slot="header" class="clearfix">
+                  <span class="testNum">试卷编号：{{starting[index].pageId}}</span>
+                  <router-link
+                    :to="{path:'pageOne',query:{classId:starting[index].classId,pageId:starting[index].pageId}}">
+                    <el-button style="float: right; padding: 3px 0;color: limegreen" type="text">开始考试</el-button>
+                  </router-link>
+                </div>
+                <div class="text item">
+                  <b>开始时间：</b>{{starting[index].startingExam}}<br/>
+                  <b>结束时间：</b>{{starting[index].startingExam1}}<br/>
+                  <b>考试班级：</b>{{starting[index].classId}}<br/>
+                </div>
               </el-card>
             </div>
-            <div class="rightC">
-              <el-card>
-                <div>试卷编号：15141</div>
-                <b>开始时间：</b>{{i.startingExam}}<br/>
-                <b>结束时间：</b>{{i.startingExam1}}
-                <router-link :to="{path:'pageOne',query:{classId:i.classId,pageId:i.pageId}}">
-                  <div class="startT">
-                    <el-button type="primary" round>开始考试</el-button>
-                  </div>
-                </router-link>
+            <div class="rightC" v-if="index<starting.length-1">
+              <el-card class="box-card">
+                <div slot="header" class="clearfix">
+                  <span class="testNum">试卷编号：{{starting[index+1].pageId}}</span>
+                  <router-link
+                    :to="{path:'pageOne',query:{classId:starting[index+1].classId,pageId:starting[index+1].pageId}}">
+                    <el-button style="float: right; padding: 3px 0;color: limegreen" type="text">开始考试</el-button>
+                  </router-link>
+                </div>
+                <div class="text item">
+                  <b>开始时间：</b>{{starting[index+1].startingExam}}<br/>
+                  <b>结束时间：</b>{{starting[index+1].startingExam1}}<br/>
+                  <b>考试班级：</b>{{starting[index+1].classId}}<br/>
+                </div>
               </el-card>
             </div>
           </div>
-        </div>
-      </el-card>
-    </div>
-    <div class="box1">
-      <div class="box1-word">
-        尚未开始的考试
-      </div>
-      <div class="box1-line">
-        <hr>
-      </div>
-      <el-card class="box-card1">
-        <div class="text item">
-          <div v-for="i in willing">
-            <el-card>
-              开始时间：{{i.willStartExam}}
-              结束时间：{{i.willStartExam1}}
-            </el-card>
+        </el-collapse-item>
+
+        <el-collapse-item title="尚未开始的考试" name="2">
+          <div v-for="(item,index) in willing" :key="index" class="box-card1" v-if="index%2==0">
+            <div class="leftC">
+              <el-card class="box-card">
+                <div slot="header" class="clearfix">
+                  <span class="testNum">试卷编号：{{willing[index].testNum}}</span>
+                  <el-button style="float: right; padding: 3px 0;color: dimgrey" type="text">尚未开始</el-button>
+                </div>
+                <div class="text item">
+                  <b>开始时间：</b>{{willing[index].willStartExam}}<br/>
+                  <b>结束时间：</b>{{willing[index].willStartExam1}}<br/>
+                  <b>考试班级：</b>{{willing[index].classId}}
+                </div>
+              </el-card>
+            </div>
+            <div class="rightC" v-if="index<willing.length-1">
+              <el-card class="box-card">
+                <div slot="header" class="clearfix">
+                  <span class="testNum">试卷编号：{{willing[index+1].testNum}}</span>
+                  <el-button style="float: right; padding: 3px 0;color: dimgrey" type="text">尚未开始</el-button>
+                </div>
+                <div class="text item">
+                  <b>开始时间：</b>{{willing[index+1].willStartExam}}<br/>
+                  <b>结束时间：</b>{{willing[index+1].willStartExam1}}<br/>
+                  <b>考试班级：</b>{{willing[index+1].classId}}
+                </div>
+              </el-card>
+            </div>
           </div>
-        </div>
-      </el-card>
-    </div>
-    <div class="box1">
-      <div class="box1-word">
-        已经完成的考试
-      </div>
-      <div class="box1-line">
-        <hr>
-      </div>
-      <div class="ending">
-        <div v-for="i in this.ending" class="endingExam1">
-          <el-card>
-            开始时间：{{i.endingExam}}
-            结束时间：{{i.endingExam1}}
-          </el-card>
-        </div>
-        <!--<div v-for="j in this.ending" class="endingExam">-->
-        <!--结束时间：{{j}}-->
-        <!--</div>-->
-      </div>
+        </el-collapse-item>
+
+        <el-collapse-item title="已经结束的考试" name="3">
+          <div v-for="(item,index) in this.ending" :key="index" class="box-card1" v-if="index%2==0">
+            <div class="leftC">
+              <el-card class="box-card">
+                <div slot="header" class="clearfix">
+                  <span class="testNum">试卷编号：{{ending[index].testNum}}</span>
+                  <el-button style="float: right; padding: 3px 0" type="text">考试结束</el-button>
+                </div>
+                <div class="text item">
+                  <b>开始时间：</b>{{ending[index].endingExam}}<br/>
+                  <b>结束时间：</b>{{ending[index].endingExam1}}<br/>
+                  <b>考试班级：</b>{{ending[index].classId}}
+                </div>
+              </el-card>
+            </div>
+
+            <div class="rightC" v-if="index<ending.length-1">
+              <el-card class="box-card">
+                <div slot="header" class="clearfix">
+                  <span class="testNum">试卷编号：{{ending[index+1].testNum}}</span>
+                  <el-button style="float: right; padding: 3px 0" type="text">考试结束</el-button>
+                </div>
+                <div class="text item">
+                  <b>开始时间：</b>{{ending[index+1].endingExam}}<br/>
+                  <b>结束时间：</b>{{ending[index+1].endingExam1}}<br/>
+                  <b>考试班级：</b>{{ending[index+1].classId}}
+                </div>
+              </el-card>
+            </div>
+          </div>
+        </el-collapse-item>
+      </el-collapse>
     </div>
   </div>
 </template>
 <script>
   import Menu from './Menu'
+
   export default {
     name: "page-index",
     mounted() {
       this.get(),
-      history.pushState(null, null, document.URL);
+        history.pushState(null, null, document.URL);
       window.addEventListener('popstate', function () {
         history.pushState(null, null, document.URL);
       })
-         if (this.refresh==true){
-           this.$nextTick(function () {
-             // setTimeout(this.reloade, 1000);
-             clearTimeout()
-           })
-           this.refresh=false
-         }
+      if (this.refresh == true) {
+        this.$nextTick(function () {
+          // setTimeout(this.reloade, 1000);
+          clearTimeout()
+        })
+        this.refresh = false
+      }
     },
-    components:{
+    components: {
       Menu
     },
     data() {
       return {
-        refresh:true,
+        activeNames: ['1', '2', '3'],
+        refresh: true,
         studentId: 0,
         classId: true,
         msg: false,
@@ -145,7 +172,7 @@
       //   this.classId=
       //   console.log('pageIndexId::'+this.classId)
       // },
-      reloade:function () {
+      reloade: function () {
         location.reload()
       },
       get: function () {
@@ -173,11 +200,14 @@
               if (nowTime < res.data.data[i].startTime) {
                 let newObj1 = {}
                 let willingExam = res.data.data[i].startTime
-                let date = new Date(willingExam).toLocaleString()
                 let willingExam1 = res.data.data[i].endTime
+                let testNum = res.data.data[i].pagesId
+                let date = new Date(willingExam).toLocaleString()
                 let date1 = new Date(willingExam1).toLocaleString()
                 newObj1.willStartExam = date
                 newObj1.willStartExam1 = date1
+                newObj1.testNum = testNum
+                newObj1.classId = res.data.data[i].classId
                 this.willing.push(newObj1)
                 //正在进行的考试
               } else if (res.data.data[i].startTime < nowTime && nowTime < res.data.data[i].endTime) {
@@ -189,7 +219,6 @@
                 let startingExam1 = res.data.data[i].endTime
                 let date1 = new Date(startingExam1).toLocaleString()
                 let classId = res.data.data[i].classId
-                //console.log('classid :: '+classId)
                 let pageId = res.data.data[i].pagesId
                 // console.log('pageId:: '+pageId)
                 newObj.startingExam = date
@@ -201,16 +230,18 @@
                 newObj.studentId = studentId
                 console.log('new obj' + this.starting)
                 this.starting.push(newObj)
-                //   console.log(this.starting)
                 //已经结束的考试
               } else {
                 let newObj = {}
                 let endingExam1 = res.data.data[i].startTime
-                let date = new Date(endingExam1).toLocaleString()
                 let endingExam2 = res.data.data[i].endTime
+                let testNum = res.data.data[i].pagesId
+                let date = new Date(endingExam1).toLocaleString()
                 let date1 = new Date(endingExam2).toLocaleString()
+                newObj.classId = res.data.data[i].classId
                 newObj.endingExam = date
                 newObj.endingExam1 = date1
+                newObj.testNum = testNum
                 this.ending.push(newObj)
               }
             }
@@ -234,90 +265,72 @@
     margin-left: 150px;
   }
 
-  .el-dropdown {
-    vertical-align: top;
-  }
-
   .el-dropdown + .el-dropdown {
     margin-left: 15px;
   }
 
-  .el-icon-arrow-down {
-    font-size: 12px;
-  }
-
-  .stu {
-    margin-top: 35px;
-
-  }
-
-  .stu1 {
-    float: left;
-    margin-left: 200px;
-  }
-
-  .stu2 {
-    margin-left: 200px;
-    float: left;
-  }
-
-  .stu3 {
-    float: left;
-    margin-left: 200px;
-  }
-
   .box1 {
-    margin-top: 35px;
-    margin-left: 200px;
-    margin-right: 270px;
+    /*margin-top: 35px;*/
+    margin-left: 13%;
+    margin-right: 13%;
+    background: red;
   }
 
   .box1-word {
     /*margin-top: 35px;*/
-    margin-right: 10px;
+    margin-right: 2px;
     float: left;
   }
 
   .box1-line {
+    float: right;
     padding-top: 3px;
   }
 
   .box-card1 {
-    margin-top: 60px;
+    margin-top: 20px;
     width: 100%;
-    background-color: #f1f1f1;
+    /*background-color: #f1f1f1;*/
   }
 
   .text {
-    font-size: 20px;
+    font-size: 15px;
   }
 
   .item {
     padding: 18px 0;
   }
 
+  .testNum {
+    font-size: 18px;
+  }
+
   .button1 {
     /*float: right;*/
     padding-bottom: 10px;
   }
-  .startT{
-    float:right;
-    margin-top: 10px;
-    margin-bottom: 10px;
-  }
-  .leftC{
+
+  .leftC {
     float: left;
-    margin-left: 1%;
     width: 48%;
     margin-top: 6px;
     margin-bottom: 6px;
   }
-  .rightC{
+
+  .rightC {
     width: 48%;
     float: right;
-    margin-right: 1%;
     margin-top: 6px;
     margin-bottom: 6px;
+  }
+
+  .MClass {
+    width: 90%;
+    margin-left: 5%;
+  }
+
+  el-collapse-item {
+    width: 90%;
   }
 </style>
 
