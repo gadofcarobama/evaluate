@@ -38,6 +38,7 @@
 import UserPop from "./UserPop";
 // import Login from './Login'
 import store from "../vuex/store";
+import index from 'vue';
 
 export default {
   data() {
@@ -65,12 +66,11 @@ export default {
       this.$router.replace(this.resultPage);
     },
     handleSelect(key, keyPath) {
-      console.log(key, keyPath);
       this.$router.replace(this.index);
     },
     loginout: function() {
       window.localStorage.removeItem("user");
-      location.reload();
+      this.$router.push({path: this.index})
     },
     reloade: function() {
       // location.reload()
