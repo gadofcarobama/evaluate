@@ -1,80 +1,94 @@
 <template>
-  <div class="userPop">
-    <el-popover class="popover"
-                ref="popover1"
-                placement="bottom-start"
-                width="auto"
-                disable="true"
-                trigger="hover">
-      <div style="width: 180px;height: 110px">
-        <div>
-          <p class="headleft"><img src="../assets/userimg.jpg" alt="xxx" class="userimg">     &nbsp; {{username}}</p>
+ <div class="userPop">
+   <div class="bar" v-if="user.name">
+     <el-button type="text" class="logout" v-on:click="logout">注销</el-button>
+    <div class="user">
+      <h3 v-text="user.name" class="userName">
+      </h3>
 
-        </div>
-
-        <div style="text-align: center;margin: 0px">
-          <div class="contentLeft">
-            <i class="el-icon-circle-check-outline"></i>
-            <p>所获荣誉</p>
-          </div>
-          <div class="contentLeft">
-            <i class="el-icon-document"></i>
-            <p>所教课程</p>
-          </div>
-          <div class="contentLeft">
-            <i class="el-icon-date"></i>
-            <p>个人中心</p>
-          </div>
-        </div>
-      </div>
-    </el-popover>
-
-    <el-button v-popover:popover1>{{username}}</el-button>
-  </div>
+     <ul>
+      <li><p v-text="user.school" class="school"></p></li>
+      <li><p v-text="user.major" class="major"></p></li>
+     </ul>
+      <p class="address" v-text="user.cenRegister"></p>
+    </div>
+   </div>
+ </div>
 </template>
 
 <script>
-  export default {
-    name: "user-pop",
-    data() {
-      return {
-        username: '胡毅',
-      }
-    },
-    mounted(){
-      this.emit()
+    export default {
+        name: "user-pop",
+    computed:{
+          user() {
+            return JSON.parse(window.localStorage.getItem('user'))
+          }
     },
     methods:{
-      emit:function () {
-        this.$emit('getStudentName',this.studentName)
+      logout:function () {
+        window.localStorage.removeItem('user')
+        window.location.reload()
+
       }
     }
-  }
+    }
+
 </script>
 
 <style scoped>
-.popover{
-  width: 800px;
-}
-
-
-  .contentLeft {
-    float: left;
-    width: 60px;
-    height: 30px;
+   .bar{
+     background-image: url("../assets/temp1.png");
+     width: 100%;
+     height: 150px;
+     background-size: cover;
+     position: relative;
+   }
+  .userName{
+    font-weight: 600;
+    text-align: left;
+    font-size: 24px;
+    color: #FFF;
+    margin-top: 0;
+    line-height: 65px;
+    padding-bottom: 0px;
+    margin-bottom: 0px;
+    margin-left: 300px;
+  }
+  .major{
+    font-weight: 400;
+    text-align: center;
+    font-size: 15px;
+    color: #FFF;
+    margin-top: 0;
+    line-height: 0px;
+    margin-left: 50px;
+  }
+  .school{
+    font-weight: 400;
+    text-align: center;
+    font-size: 15px;
+    color: #FFF;
+    margin-top: 0;
+    line-height: 0px;
 
   }
-
-  .userimg {
-    margin-top: 0px;
-    padding: 0px;
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
+ ul li{
+   float: left;
+   list-style: none;
+ }
+  ul{
+    margin-left: 200px;
   }
-
-.el-button{
-  border: 0px;
-}
+  .address{
+    margin-top: 35px;
+    color: #FFF;
+    margin-left: 270px;
+  }
+  .logout{
+    font-size: 18px;
+    color: red;
+    float: right;
+    margin-right: 20px;
+  }
 
 </style>

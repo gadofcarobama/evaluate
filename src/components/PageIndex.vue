@@ -1,6 +1,7 @@
 <template>
   <div v-show="classId">
     <Menu></Menu>
+    <UserPop></UserPop>
     <div v-show="msg">
       <el-card class="login">请先登录</el-card>
     </div>
@@ -73,7 +74,6 @@
             </div>
           </div>
         </el-collapse-item>
-
         <el-collapse-item title="已经结束的考试" name="3">
           <div v-for="(item,index) in this.ending" :key="index" class="box-card1" v-if="index%2==0">
             <div class="leftC">
@@ -111,7 +111,7 @@
 </template>
 <script>
   import Menu from './Menu'
-
+  import UserPop from "./UserPop";
   export default {
     name: "page-index",
     mounted() {
@@ -129,7 +129,8 @@
       }
     },
     components: {
-      Menu
+      Menu,
+      UserPop
     },
     data() {
       return {

@@ -1,6 +1,7 @@
 <template>
   <div class="detail">
     <Menu></Menu>
+    <UserPop></UserPop>
     <el-card class="box1">当前考卷详情解析</el-card>
     <div v-for="(item,index) in res" class="content-card" :key="index">
       <el-card>{{index+1}}<br>
@@ -15,14 +16,15 @@
 
 <script>
   import Menu from './Menu'
-
+  import UserPop from './UserPop'
   export default {
     name: "detail",
     mounted() {
       this.getErrDateil()
     },
     components: {
-      Menu
+      Menu,
+      UserPop
     },
     data() {
       return {

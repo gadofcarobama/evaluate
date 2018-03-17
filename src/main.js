@@ -27,8 +27,6 @@ Vue.use(axios)
 new Vue({
   el: '#app',
   router,
-  // vuex,
-  // store,
   template: '<App/>',
   components: {App}
 })

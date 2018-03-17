@@ -79,7 +79,6 @@
               window.localStorage.setItem('user', JSON.stringify(res.data.data))
               //分发登录的action
               store.dispatch("login")
-              //this.$router.replace('/eventHub')
               this.$notify({
                 title: '登录成功',
                 message: '欢迎' + res.data.data.name + "登录",

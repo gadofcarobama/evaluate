@@ -1,10 +1,9 @@
 <template>
-
   <span class="exam">
     <Menu></Menu>
+    <UserPop></UserPop>
     <el-row>
       <el-col :span="24">
-
         <el-card class="box-card">
           <div slot="header" class="clearfix">
             <span>{{examName}}</span>
@@ -72,7 +71,7 @@
               <codemirror ref="codeEditor" :options="{  mode: 'javascript',
     extraKeys: {'Ctrl': 'autocomplete'},lineNumbers: true,theme: 'eclipse'}"
                           @input="onCmCodeChange"
-                        
+
                           />
             </el-card>
 
@@ -135,9 +134,6 @@
         </el-card>
       </el-col>
     </el-row>
-
-
-
   </span>
 </template>
 
@@ -145,7 +141,7 @@
 import ElCard from "element-ui/packages/card/src/main";
 import { codemirror } from "vue-codemirror-lite";
 import Menu from "./Menu";
-
+import UserPop from "./UserPop"
 require("codemirror/mode/javascript/javascript");
 require("codemirror/theme/eclipse.css");
 require("codemirror/addon/hint/show-hint.js");
@@ -155,13 +151,14 @@ export default {
   components: {
     ElCard,
     codemirror,
-    Menu
+    Menu,
+    UserPop
   },
   name: "page-one",
   mounted() {
     this.getPage();
     this.f();
-
+    this.judge();
     window.addEventListener("scroll", this.scroll);
   },
   data() {
@@ -229,6 +226,11 @@ export default {
   },
 
   methods: {
+    judge:function () {
+      if (!this.user.name){
+        this.$router.replace('/studentLogin')
+      }
+    },
     scroll: function() {
       this.scrolltop =
         document.documentElement.scrollTop || document.body.scrollTop;
@@ -266,18 +268,16 @@ export default {
           this.result.answer.push({ id: this.code[0].id, ans: this.codes });
         }
       }
-
       console.log(this.result.answer.length);
       console.log(this.result.answer);
-      if (this.result.answer.length < this.smalltest) {
-        console.log("答案为空，无法提交");
+      if(this.result.answer.length<this.smalltest){
+      console.log("答案为空，无法提交");
         this.$notify.error({
           title: "错误",
           message: "有试题未填写,请认真答题。"
         });
-        return;
+         return;
       }
-
       this.result.studentId = JSON.parse(
         window.localStorage.getItem("user")
       ).id;
@@ -438,7 +438,6 @@ export default {
       }
       this.isactive = true;
     },
-
     addBlank(pid, answer) {
       let flag = 0;
       for (let i = 0; i < this.result.answer.length; i++) {
@@ -496,6 +495,9 @@ export default {
   computed: {
     editor() {
       return this.$refs.codeEditor.editor;
+    },
+    user(){
+      return JSON.parse(window.localStorage.getItem('user'))
     }
   }
 };

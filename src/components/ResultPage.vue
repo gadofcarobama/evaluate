@@ -1,7 +1,7 @@
 <template>
   <div class="result-page">
     <Menu></Menu>
-
+    <UserPop></UserPop>
     <el-card class="msg">历史考试</el-card>
 
     <el-col :span="14" class="main">
@@ -38,11 +38,12 @@
 
 <script>
   import Menu from './Menu'
-
+  import UserPop from './UserPop'
   export default {
     name: "result-page",
     components: {
-      Menu
+      Menu,
+      UserPop
     },
     data() {
       return {
