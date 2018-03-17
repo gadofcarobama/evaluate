@@ -270,14 +270,6 @@ export default {
       }
       console.log(this.result.answer.length);
       console.log(this.result.answer);
-      if(this.result.answer.length<this.smalltest){
-      console.log("答案为空，无法提交");
-        this.$notify.error({
-          title: "错误",
-          message: "有试题未填写,请认真答题。"
-        });
-         return;
-      }
       this.result.studentId = JSON.parse(
         window.localStorage.getItem("user")
       ).id;
