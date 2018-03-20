@@ -89,7 +89,6 @@
                 </div>
               </el-card>
             </div>
-
             <div class="rightC" v-if="index<ending.length-1">
               <el-card class="box-card">
                 <div slot="header" class="clearfix">
