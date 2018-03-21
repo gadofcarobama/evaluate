@@ -115,7 +115,6 @@
           </div>
   </el-collapse-item>
 </el-collapse>
-
           <br>
           <div class="t8">
             <div class="t9">已做</div>
@@ -158,6 +157,13 @@ export default {
     this.getPage();
     this.f();
     window.addEventListener("scroll", this.scroll);
+    var startTime=this.$route.query.startTime
+    console.log("startTime"+startTime)
+    var endTime=this.$route.query.endTime
+    console.log("endTime"+endTime)
+    var start=new Date(startTime).getTime()
+    // console.log(start)
+
   },
   data() {
     return {
@@ -245,9 +251,8 @@ export default {
          this.thisHour=hour
          this.thisMinute=minute
          this.thisSecond=second
-        // this.$set(this.thisSecond)
         // this.setTime=second
-           console.log(this.thisSecond)
+        // console.log(this.thisSecond)
       },1000);
     },
 
@@ -416,7 +421,6 @@ export default {
     test: function() {
       console.log("test");
     },
-
     find: function(pid, id) {
       let ans;
       const self = this;

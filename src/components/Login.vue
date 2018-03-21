@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="Login">
     <Menu></Menu>
     <el-row>
       <el-col :span="16">
@@ -109,8 +109,11 @@
 </script>
 
 <style scoped>
+  .Login {
+    /*background-image: url("../assets/schoolLogo.jpg");*/
+  }
   #login {
-    width: 350px;
+    width: 400px;
     height: 350px;
     margin-top: 50px;
     margin-left: 870px;
@@ -134,9 +137,9 @@
     margin-left: 50px;
     float: left;
     width: 800px;
-    height: 355px;
+    height: 350px;
     margin-top: 50px;
     position: fixed;
-    background-image: url("http://img.zcool.cn/community/0142135541fe180000019ae9b8cf86.jpg@1280w_1l_2o_100sh.png");
+    background-image: url("../assets/schoolLogo.jpg");
   }
 </style>
