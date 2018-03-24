@@ -74,7 +74,6 @@
 
                           />
             </el-card>
-
             <el-button type="primary" style="float: right">测试</el-button>
           </div>
         </el-card>
@@ -83,11 +82,10 @@
       <el-col :span="5">
         <el-card class="dati" ref="anscard">
           <div slot="header">
-            <div class="el-icon-time">12:45</div>
+            <div class="el-icon-time"></div>
+            0{{thisHour}}:<div v-if="thisMinute<10" style="display: inline">0</div>{{thisMinute}}:<div v-if="thisSecond<10" style="display: inline">0</div>{{thisSecond}}
           </div>
           <span>答题卡</span>
-
-
           <el-collapse v-model="activeNames" @change="handleChange">
   <el-collapse-item title="选择题" name="1" v-show="choiceFlag">
         <div class="box" v-for="(item,index) in choices" :key="item">
@@ -117,7 +115,6 @@
           </div>
   </el-collapse-item>
 </el-collapse>
-
           <br>
           <div class="t8">
             <div class="t9">已做</div>
@@ -156,13 +153,23 @@ export default {
   },
   name: "page-one",
   mounted() {
+    this.time_fun();
     this.getPage();
     this.f();
-    this.judge();
     window.addEventListener("scroll", this.scroll);
+    var startTime=this.$route.query.startTime
+    console.log("startTime"+startTime)
+    var endTime=this.$route.query.endTime
+    console.log("endTime"+endTime)
+    var start=new Date(startTime).getTime()
+    // console.log(start)
+
   },
   data() {
     return {
+      thisHour:0,
+      thisMinute:0,
+      thisSecond:0,
       sumScore: 0,
       smalltest: 0,
       bigtest: 0,
@@ -224,18 +231,31 @@ export default {
         '<input class="blanknum"  blur="test()" style="border: 0px solid #878787; border-bottom-width: 1px;" align="center" readonly="readonly"/>'
     };
   },
-
   methods: {
-    judge:function () {
-      if (!this.user.name){
-        this.$router.replace('/studentLogin')
-      }
+    time_fun:function () {
+      var sec=0;
+      setInterval(()=> {
+        sec++
+        // console.log("sec::"+sec)
+        // this.thisSecond++;
+        var date=new Date(0,0)
+        date.setSeconds(sec)
+        var hour=date.getHours();
+        // console.log("hour is ::"+hour) 非数字 NaN
+        var minute=date.getMinutes();
+        var second=date.getSeconds();
+        // console.log("second is ::"+second)
+        // second>=10?this.thisSecond=second:this.thisSecond='0'+second
+        // minute>=10?this.thisMinute=minute:this.thisMinute='0'+minute
+        // hour>=10?this.thisHour=hour:this.thisHour='0'+hour
+         this.thisHour=hour
+         this.thisMinute=minute
+         this.thisSecond=second
+        // this.setTime=second
+        // console.log(this.thisSecond)
+      },1000);
     },
-    scroll: function() {
-      this.scrolltop =
-        document.documentElement.scrollTop || document.body.scrollTop;
-      // console.log('this scroll is ::'+this.scrolltop)
-    },
+
     f: function() {
       for (let i = 0; i < this.choices.length; i++) {
         this.choices[i].sectionId = this.choices[i].id;
@@ -393,7 +413,6 @@ export default {
     test: function() {
       console.log("test");
     },
-
     find: function(pid, id) {
       let ans;
       const self = this;
@@ -490,7 +509,7 @@ export default {
     },
     user(){
       return JSON.parse(window.localStorage.getItem('user'))
-    }
+    },
   }
 };
 </script>

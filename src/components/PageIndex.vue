@@ -14,7 +14,7 @@
                 <div slot="header" class="clearfix">
                   <span class="testNum">试卷编号：{{starting[index].pageId}}</span>
                   <router-link
-                    :to="{path:'pageOne',query:{classId:starting[index].classId,pageId:starting[index].pageId}}">
+                    :to="{path:'pageOne',query:{classId:starting[index].classId,pageId:starting[index].pageId,startTime:starting[index].startingExam,endTime:starting[index].startingExam1}}">
                     <el-button style="float: right; padding: 3px 0;color: limegreen" type="text">开始考试</el-button>
                   </router-link>
                 </div>
@@ -30,7 +30,7 @@
                 <div slot="header" class="clearfix">
                   <span class="testNum">试卷编号：{{starting[index+1].pageId}}</span>
                   <router-link
-                    :to="{path:'pageOne',query:{classId:starting[index+1].classId,pageId:starting[index+1].pageId}}">
+                    :to="{path:'pageOne',query:{classId:starting[index+1].classId,pageId:starting[index+1].pageId,startTime:starting[index+1].startingExam,endTime:starting[index+1].startingExam1}}">
                     <el-button style="float: right; padding: 3px 0;color: limegreen" type="text">开始考试</el-button>
                   </router-link>
                 </div>
@@ -89,7 +89,6 @@
                 </div>
               </el-card>
             </div>
-
             <div class="rightC" v-if="index<ending.length-1">
               <el-card class="box-card">
                 <div slot="header" class="clearfix">
