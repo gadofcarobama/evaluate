@@ -121,11 +121,10 @@
 
   .line-chart {
     margin: 20px;
-    width: 45%;
+    width: 35%;
     height: auto;
     text-align: center;
     position: fixed;
-
   }
 
   .main {

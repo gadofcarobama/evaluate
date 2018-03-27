@@ -46,11 +46,14 @@
         <el-card class="box-card" id="t20" v-show="blankFlag">
           填空题(共有{{blanks.length}}题，每题{{this.blankScore}}分)
           <div v-for="(item,o) in blanks " :key='o'>
-            <div class="ans-title">{{o+1}}</div>
+            <div class="ans-title">{{o+1}} 共{{item.blankNum}}空</div>
             <pre v-html="(item.title)" class="ans-title"></pre>
             <!--<div v-for="i in item.blankNum" class="blanknum">-->
             请作答： <input v-model="item.blankContent"
-                        v-on:blur="addBlank(item.id,item.blankContent)" class="blankinput" placeholder="每空答案请用【】包裹"/>
+                        v-on:blur="addBlank(item.id,item.blankContent)" class="blankinput" placeholder="每空答案请用【】包裹,每空对应一个【】"/>
+            <div class="blanknum1">
+
+          </div>
             <!--</div>-->
           </div>
         </el-card>
@@ -59,7 +62,9 @@
           <div v-for="(item,o) in ans " :key='o'>
             {{o+1}}
             <pre v-html="item.title"></pre>
-            <el-input placeholder="请输入答案" v-model="item.ansConent" v-on:blur="addAns(item.id,item.ansConent)"/>
+            <el-input   type="textarea"
+                        style="width: 40%"
+                        :autosize="{ minRows: 2, maxRows: 4}" placeholder="请输入答案" v-model="item.ansConent" v-on:blur="addAns(item.id,item.ansConent)"/>
           </div>
         </el-card>
         <el-card class="box-card" id="t22" v-show="codeFlag">
@@ -559,7 +564,7 @@ export default {
 
 .dati {
   margin-left: 50px;
-  margin-bottom: 30px;
+  margin-bottom: 230px;
   position: fixed;
 }
 
@@ -735,7 +740,7 @@ export default {
 }
 
 .blankinput {
-  width: 200px;
+  width: 400px;
   border: 0px solid #878787;
   border-bottom-width: 1px;
   text-align: center;
@@ -746,4 +751,8 @@ export default {
     "Microsoft YaHei", "微软雅黑", Arial, sans-serif;
   font-size: 14px;
 }
+  /*.blanknum1{*/
+    /*float: right;*/
+    /*!*margin-right: 60%;*!*/
+  /*}*/
 </style>

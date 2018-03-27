@@ -12,6 +12,7 @@ Vue.config.productionTip = false
 Vue.prototype.axios = axios
 Vue.use(ElementUI)
 Vue.prototype.$axios = axios.create({
+  
   baseURL: 'http://193.112.6.35:8080/'
 })
 axios.defaults.baseURL = 'http://193.112.6.35:8080/'

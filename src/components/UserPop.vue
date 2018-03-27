@@ -7,8 +7,8 @@
       </h3>
 
      <ul>
-      <li><p v-text="user.school" class="school"></p></li>
-      <li><p v-text="user.major" class="major"></p></li>
+      <li><p v-text="user.studentNumber" class="school"></p></li>
+      <li><p v-text="user.major" class="major">无</p></li>
      </ul>
       <p class="address" v-text="user.cenRegister"></p>
     </div>
@@ -37,7 +37,7 @@
 
 <style scoped>
    .bar{
-     background-image: url("../assets/temp1.png");
+     background-image: url("http://7xt81u.com1.z0.glb.clouddn.com/temp1.png ");
      width: 100%;
      height: 150px;
      background-size: cover;
