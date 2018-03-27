@@ -5,9 +5,9 @@
     <el-card class="box1">当前考卷详情解析</el-card>
     <div v-for="(item,index) in res" class="content-card" :key="index">
       <el-card>{{index+1}}<br>
-        <font color="red">题目：</font>{{item.title}}<br>
-        <font color="red">你的答案：</font>{{item.answer}}<br>
-        <font color="red">标准答案：</font>{{item.standardAnswer}}<br>
+        <font color="red">题目：</font><pre>{{item.title}}</pre><br>
+        <font color="red">你的答案：</font><pre>{{item.answer}}</pre><br>
+        <font color="red">标准答案：</font><pre>{{item.standardAnswer}}</pre><br>
         <font color="red">该题得分：</font>{{item.score}}
       </el-card>
     </div>

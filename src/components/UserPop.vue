@@ -42,6 +42,8 @@
      height: 150px;
      background-size: cover;
      position: relative;
+     margin: 0;
+     padding: 0;
    }
   .userName{
     font-weight: 600;
