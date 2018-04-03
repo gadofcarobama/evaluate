@@ -85,6 +85,7 @@
       </el-col>
 
       <el-col :span="5">
+        <div :class="carfixed==true? 'isfixed':''" id="carbar">
         <el-card class="dati" ref="anscard">
           <div slot="header">
             <div class="el-icon-time"></div>
@@ -134,6 +135,7 @@
           </div>
           <el-button type="primary" size="medium" round @click="post " class="postbtn">提交</el-button>
         </el-card>
+          </div>
       </el-col>
     </el-row>
   </span>
@@ -158,10 +160,10 @@ export default {
   },
   name: "page-one",
   mounted() {
-    this.time_fun();
+    // this.time_fun();
     this.getPage();
     this.f();
-    window.addEventListener("scroll", this.scroll);
+    window.addEventListener("scroll", this.lis);
     var startTime=this.$route.query.startTime
     console.log("startTime"+startTime)
     var endTime=this.$route.query.endTime
@@ -172,6 +174,7 @@ export default {
   },
   data() {
     return {
+      scroll:'',
       thisHour:0,
       thisMinute:0,
       thisSecond:0,
@@ -237,6 +240,20 @@ export default {
     };
   },
   methods: {
+    lis:function() {
+      var scrollTop=window.pageYOffset||document.documentElement.scrollTop||document.body.scrollTop
+      var offsetTop=document.querySelector("#carbar").offsetTop
+      //body.clientHeight-div.offsetTop-div.offsetHeight
+      //到底部的距离
+      console.log("offsetTop"+offsetTop)
+      console.log("scroll"+scrollTop)
+      //滚轮大于car到顶部的距离并且小于car到底部的距离
+      if (scrollTop>offsetTop+40){
+        this.carfixed=true
+      }else {
+        this.carfixed=false
+      }
+    },
     time_fun:function () {
       var sec=0;
       setInterval(()=> {
@@ -520,6 +537,12 @@ export default {
 </script>
 
 <style scoped>
+  .isfixed{
+    width: 20%;
+    position: fixed;
+    /*top: 200px;*/
+    magrin-bottom:200px;
+  }
 .blanknum {
   border: 0px solid #878787;
   border-bottom-width: 1px;
@@ -557,11 +580,13 @@ export default {
 .dati {
   margin-left: 50px;
   margin-bottom: 230px;
-  position: fixed;
+  /*position: fixed;*/
+
+
 }
 
 .datika {
-  width: 200px;
+  width:80%;
   height: 50px;
   background-color: darkgrey;
   margin-top: 0;

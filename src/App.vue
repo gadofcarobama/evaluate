@@ -39,12 +39,13 @@
   }
   .content {
     min-height: calc(100vh - 83px);
-
+    /*margin-bottom: 83px;*/
   }
   .footer {
     height: 83px;
     width: 100%;
     background-color: black;
+    /*position: fixed;*/
   }
   .main{
     /*width: 1200px;*/

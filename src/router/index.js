@@ -10,7 +10,12 @@ import Detail from '@/components/Detail'
 Vue.use(Router)
 export default new Router({
   mode:'history',
-  routes: [{
+  routes: [
+    {
+      path:'*',
+      redirect:'/pageIndex'
+    },
+    {
       path: '/',
       name: '',
       component: Login

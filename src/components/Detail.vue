@@ -3,8 +3,28 @@
     <Menu></Menu>
     <UserPop></UserPop>
     <el-card class="box1">当前考卷详情解析</el-card>
-    <div v-for="(item,index) in res" class="content-card" :key="index">
-      <el-card>{{index+1}}<br>
+    <div v-for="(item,index) in choices" class="content-card" :key="index" v-if="choices.length!==0">
+      <el-card>
+        <font color="red">题目：</font><pre>{{item.title}}</pre><br>
+        <font color="red">选项：</font><pre>A:{{item.sectionA}}</pre><br>
+        <pre>B:{{item.sectionB}}</pre><br>
+        <pre>C:{{item.sectionC}}</pre><br>
+        <pre>D:{{item.sectionD}}</pre><br>
+        <font color="red">你的答案：</font><pre>{{item.answer}}</pre><br>
+        <font color="red">标准答案：</font><pre>{{item.standardAnswer}}</pre><br>
+        <font color="red">该题得分：</font>{{item.score}}
+      </el-card>
+    </div>
+    <div v-for="(item,index) in blanks" class="content-card" v-if="blanks.length!==0">
+      <el-card>
+      <font color="red">题目：</font><pre>{{item.title}}</pre><br>
+      <font color="red">你的答案：</font><pre>{{item.answer}}</pre><br>
+      <font color="red">标准答案：</font><pre>{{item.standardAnswer}}</pre><br>
+      <font color="red">该题得分：</font>{{item.score}}
+      </el-card>
+    </div>
+    <div v-for="(item,index) in ans" class="content-card" v-if="ans.length!==0">
+      <el-card>
         <font color="red">题目：</font><pre>{{item.title}}</pre><br>
         <font color="red">你的答案：</font><pre>{{item.answer}}</pre><br>
         <font color="red">标准答案：</font><pre>{{item.standardAnswer}}</pre><br>
@@ -28,7 +48,10 @@
     },
     data() {
       return {
-        res: []
+        res: [],
+        choices:[],
+        blanks:[],
+        ans:[],
       }
     },
 
@@ -41,8 +64,9 @@
         this.axios.get('/page/getScore', {params: {studentId: studentId, pageId: pageId}})
           .then(res => {
             console.log(res)
-            this.res = res.data.data.ansList
-            console.log('this.res is:' + this.res)
+            this.choices=res.data.data.select
+            this.blanks=res.data.data.blank
+            this.ans=res.data.data.ans
           })
           .catch(err => {
             console.log(err)
